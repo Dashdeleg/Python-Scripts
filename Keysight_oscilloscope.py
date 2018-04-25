@@ -1,5 +1,5 @@
 """
-Sample code for taking voltage measurement with the multimeter Agilent 34110A
+Sample code for taking voltage measurement with the oscilloscope KeySight InfiniiVision DSOX2024A
     .. last edit: 24/4/2018
     .. section author:: Dashdeleg Baasanjav <d.baasanjav@uu.nl>
 """
