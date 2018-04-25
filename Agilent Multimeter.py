@@ -3,6 +3,7 @@ Sample code for taking voltage measurement with the multimeter Agilent 34110A
     .. last edit: 25/4/2018
     .. section author:: Dashdeleg Baasanjav <d.baasanjav@uu.nl>
 """
+
 import visa
 import time
 import threading
@@ -21,7 +22,7 @@ print("Serial number of the multimeter is %s" %modelSerialnumber)
 """
 Configure the multimeter
 """
-
+# commands below just taken from oscilloscope code, not compatible with the multimeter!
 multi.write(':WAVeform:SOURce %s' % (source2))
 multi.write(':WAVeform:POINts %s' % ('1000'))
 multi.write(':WAVeform:FORMat %s' % ('WORD'))
@@ -34,21 +35,22 @@ binaryBlockData = multi.query_binary_values(':WAVeform:DATA?','h',False)
 Run measurements
 """
 
-f = open("Measurement.dat", "w")
+f = open("Measurement3.dat", "w")
 
 class TimerClass(threading.Thread):
+    """
+    Simple class for taking and reading out measurement every second from the multimeter.
+    """
     def __init__(self):
         threading.Thread.__init__(self)
         self.event = threading.Event()
 
     def run(self):
         while not self.event.is_set():
-           f.write(time.ctime() + ' ') # current time
-           multi.write('INIT')
-           multi.write('MEASure[:VOLTage][:DC]?')
-           V = multi.query('FETC?') # read out measurement value
+           f.write(time.ctime() + ' ')  # current time
+           V = multi.query('MEAS:VOLT:DC?') # read out measurement value
            f.write(str(V))
-           self.event.wait(1) # take measurement every second
+           self.event.wait(1)  # take measurement every second
 
     def stop(self):
         self.event.set()
