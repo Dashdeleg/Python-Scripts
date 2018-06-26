@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 from scipy import ndimage
 from mpl_toolkits.axes_grid1 import make_axes_locatable
-from anglemap import angle_map
+from Useful_functions import angle_map
 
 
 # Load images
